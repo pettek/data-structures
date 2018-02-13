@@ -1,12 +1,17 @@
+'use strict';
+
 import Node from './node';
 
 export default class List {
     /**
-     * Represents a List.
-     * @constructor
+     * @constructor Represents a list.
+     * @param comparator - optional parameter which is callback with 2 parameters
+     *                      that governs the order of nodes; default order is simple
+     *                      numeric ascending
      */
-    constructor() {
+    constructor(comparator) {
         this.root = null;
+        this.comparator = comparator || function(a, b) {return (a > b)};
     }
 
     /**
@@ -28,7 +33,7 @@ export default class List {
             this.root = node;
             return;
         }
-        if (this.root.value > node.value) {
+        if (this.comparator(this.root.value, node.value)) {
             node.next = this.root;
             this.root = node;
             return;
@@ -37,7 +42,7 @@ export default class List {
         let current = this.root;
 
         while (current.next !== null) {
-            if (current.next.value > node.value) break;
+            if (this.comparator(current.next.value, node.value)) break;
             current = current.next;
         }
         node.next = current.next;
@@ -110,14 +115,6 @@ export default class List {
      * @returns {string}
      */
     toString() {
-        let string = "";
-        if (this.root === null) return string;
-
-        let current = this.root;
-        while (current !== null) {
-            string += current.value + ' ';
-            current = current.next;
-        }
-        return string;
+        return this.toArray().join(" ");
     }
 }
