@@ -1,8 +1,8 @@
 'use strict';
 
-import Node from './node';
+import {Node} from './node';
 
-export default class List {
+export class List {
     /**
      * @constructor Represents a list.
      * @param comparator - optional parameter: a callback with 2 parameters
