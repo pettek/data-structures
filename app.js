@@ -3,11 +3,11 @@
 import List from './src/list/list';
 import Node from './src/list/node';
 
-function descOrder(a, b){
+function descOrder(a, b) {
     return a < b;
 }
 
-function randomOrder(a, b){
+function randomOrder(a, b) {
     return Math.random() > 0.5;
 }
 
@@ -27,4 +27,3 @@ emptyList.find(new Node(2));
 
 let string = list.toString();
 let array = list.toArray();
-{}
