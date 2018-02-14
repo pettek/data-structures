@@ -15,13 +15,14 @@ function ascByAge (a, b) {
 }
 
 let list = new List(randomOrder);
-list.add(new Node(5));
-list.add(new Node(3));
-list.add(10);
-list.add(20);
-list.add(15);
-list.remove(7);
-list.remove(-56);
+list.add(new Node(5))
+    .add(new Node(3))
+    .add(10)
+    .add(20)
+    .add(15)
+    .remove(7)
+    .remove(-56);
+
 let found = list.find(5);
 
 let emptyList = new List();
@@ -32,8 +33,8 @@ let string = list.toString();
 let array = list.toArray();
 
 let listOfPeople = new List(ascByAge);
-listOfPeople.add({name: 'Piotr', age: 24});
-listOfPeople.add({name: 'Osoba1', age: -100});
-listOfPeople.add({name: 'Osoba2', age: 100});
+listOfPeople.add({name: 'Piotr', age: 24})
+            .add({name: 'Osoba1', age: -100})
+            .add({name: 'Osoba2', age: 100});
 
 {}

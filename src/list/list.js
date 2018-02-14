@@ -28,6 +28,7 @@ export class List {
   /**
    * Adds a new Node to a List
    * @param {*} toAdd
+   * @returns {List}
    */
   add (toAdd) {
     let node = List.checkNode(toAdd);
@@ -35,13 +36,13 @@ export class List {
     // If list is empty, new Node becomes a root
     if (this.root === null) {
       this.root = node;
-      return;
+      return this;
     }
     // Check if root element must be replaced
     if (this.comparator(this.root.value, node.value)) {
       node.next = this.root;
       this.root = node;
-      return;
+      return this;
     }
 
     let current = this.root;
@@ -55,6 +56,8 @@ export class List {
     }
     node.next = current.next;
     current.next = node;
+
+    return this;
   }
 
   /**
@@ -62,20 +65,20 @@ export class List {
    * Returns true on success or false otherwise
    *
    * @param {*} toRemove
-   * @returns {boolean}
+   * @returns {List}
    */
   remove (toRemove) {
 
     // Return false (removal not successful) if list is empty
     if (this.root === null) {
-      return false;
+      return this;
     }
     let node = List.checkNode(toRemove);
 
     // Check if the root element is the one to be removed
     if (this.root.value === node.value) {
       this.root = this.root.next;
-      return true;
+      return this;
     }
 
     let previous = this.root;
@@ -92,6 +95,8 @@ export class List {
       previous = previous.next;
       current = current.next;
     }
+
+    return this;
   }
 
   /**
