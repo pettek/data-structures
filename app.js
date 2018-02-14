@@ -11,6 +11,10 @@ function randomOrder(a, b){
     return Math.random() > 0.5;
 }
 
+function ascByAge(a, b){
+    return a.age > b.age;
+}
+
 let list = new List(randomOrder);
 list.add(new Node(5));
 list.add(new Node(3));
@@ -27,4 +31,10 @@ emptyList.find(new Node(2));
 
 let string = list.toString();
 let array = list.toArray();
+
+let listOfPeople = new List(ascByAge);
+listOfPeople.add({name: 'Piotr', age: 24});
+listOfPeople.add({name: 'Osoba1', age: -100});
+listOfPeople.add({name: 'Osoba2', age: 100});
+
 {}
