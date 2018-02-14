@@ -1,17 +1,17 @@
 'use strict';
 
-import {Node, List} from './src/list';
+import { Node, List } from './src/list';
 
-function descOrder(a, b) {
-    return a < b;
+function descOrder (a, b) {
+  return a < b;
 }
 
-function randomOrder(a, b) {
-    return Math.random() > 0.5;
+function randomOrder (a, b) {
+  return Math.random() > 0.5;
 }
 
-function ascByAge(a, b){
-    return a.age > b.age;
+function ascByAge (a, b) {
+  return a.age > b.age;
 }
 
 let list = new List(randomOrder);
