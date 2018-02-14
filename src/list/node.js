@@ -1,6 +1,6 @@
 'use strict';
 
-export default class Node {
+export class Node {
     /**
      * Represents a Node.
      * @constructor
