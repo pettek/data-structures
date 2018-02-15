@@ -1,6 +1,7 @@
 'use strict';
 
 import { Node, List } from './src/list';
+import { SkipNode, SkipList } from './src/skip-list';
 
 function descOrder (a, b) {
   return a < b;
@@ -36,5 +37,7 @@ let listOfPeople = new List(ascByAge);
 listOfPeople.add({name: 'Piotr', age: 24})
             .add({name: 'Osoba1', age: -100})
             .add({name: 'Osoba2', age: 100});
+
+let skipList = new SkipList();
 
 {}
