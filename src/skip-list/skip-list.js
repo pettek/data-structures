@@ -3,6 +3,10 @@
 import { SkipNode } from './skip-node';
 
 export class SkipList {
+  /**
+   *
+   * @param maxHeight
+   */
   constructor (maxHeight) {
     this.head = Array(maxHeight).fill(null);
     this.getRandom = function () {
@@ -10,30 +14,53 @@ export class SkipList {
     };
   };
 
+  /**
+   *
+   * @param node
+   * @returns {SkipList}
+   */
   add (node) {
-    // node.height = this.getRandom();
+    node.height = this.getRandom();
     node.next = Array(node.height).fill(null);
 
     for(let i = 0; i < node.height; i++) {
-      if(this.head[this.head.length - node.next.length + i] === null){
-        this.head[this.head.length - node.next.length + i] = node;
+      let currentHeadLevel = this.head.length - node.next.length + i;
+      if(this.head[currentHeadLevel] === null){
+        this.head[currentHeadLevel] = node;
       } else {
-        let currentNode = this.head[this.head.length - node.next.length + i];
-        while(currentNode.next[currentNode.next.length - node.next.length + i] !== null){
-          currentNode = currentNode.next[currentNode.next.length - node.next.length + i];
+        let currentNode = this.head[currentHeadLevel];
+        let currentNodeLevel = currentNode.next.length - node.next.length + i;
+        while(currentNode.next[currentNodeLevel] !== null){
+          currentNode = currentNode.next[currentNodeLevel];
+          currentNodeLevel = currentNode.next.length - node.next.length + i;
         }
-        currentNode.next[currentNode.next.length - node.next.length + i] = node;
+        currentNode.next[currentNodeLevel] = node;
       }
     }
+
+    return this;
   }
+
+  find (node) {
+    for(let i = 0; i < this.head.length; i++) {
+      let current = this.head[i];
+      while(current !== null && current.value <= node.value){
+        if(current.value === node.value) return current;
+        current = current.next[i - this.head.length + current.next.length];
+      }
+    }
+    return null;
+  }
+
+
 
   printLevels() {
     let outputString = "";
     for(let i = 0; i < this.head.length; i++){
       let current = this.head[i];
-      outputString += "\n\nlevel " + (this.head.length - i) + "\n";
+      outputString += "\nlevel " + (this.head.length - i) + "\n";
       while(current !== null){
-        outputString += current.value;
+        outputString += (" -> " + current.value);
         current = current.next[i - this.head.length + current.next.length];
       }
     }

@@ -1,6 +1,6 @@
 'use strict';
 
-import { Node, List } from './src/list';
+// import { Node, List } from './src/list';
 import { SkipNode, SkipList } from './src/skip-list';
 
 // {
@@ -43,9 +43,14 @@ import { SkipNode, SkipList } from './src/skip-list';
 // }
 
 let list = new SkipList(5);
-list.add(new SkipNode(4, 3));
-list.add(new SkipNode(2, 2));
-list.add(new SkipNode(1, 1));
+list.add(new SkipNode(2));
+list.add(new SkipNode(3));
+list.add(new SkipNode(4));
+list.add(new SkipNode(5));
+list.add(new SkipNode(6));
+list.add(new SkipNode(7));
+let a = list.find(new SkipNode(3));
+let b = list.find(new SkipNode(7));
 
-// console.log(list.printLevels());
+console.log(list.printLevels());
 {}

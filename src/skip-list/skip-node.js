@@ -3,7 +3,6 @@
 export class SkipNode {
   constructor (value, height = 0) {
     this.value = value;
-    this._height = 0;
     this._next = [];
     this._height = height;
   }
