@@ -22,8 +22,4 @@ export class SkipNode {
   set height (value) {
     this._height = value;
   }
-
-  addNext (node) {
-    this._next.push(node);
-  }
 }

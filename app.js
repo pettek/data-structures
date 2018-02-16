@@ -43,9 +43,9 @@ import { SkipNode, SkipList } from './src/skip-list';
 // }
 let numberDesc = function (a, b) {
   if (a < b) {
-    return 1;
-  } else if (a > b) {
     return -1;
+  } else if (a > b) {
+    return 1;
   } else {
     return 0;
   }
@@ -79,8 +79,8 @@ peopleList.add({id: 4, name: 'Dennis'}).
            add({id: 2, name: 'Barbara'}).
            add({id: 3, name: 'Charlie'}).
            add({id: 5, name: 'Endrju'}).
-           add({id: 1, name: 'Andrzej'});
-peopleList.remove({id: 2, name: 'Barbara'});
+           add({id: 1, name: 'Andrzej'}).
+           remove({id: 5});
 
 console.log(list.printLevels());
 console.log(peopleList.printLevels('name'));

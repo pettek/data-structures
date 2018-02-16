@@ -10,10 +10,6 @@ export class SkipList {
    */
   constructor (maxHeight, comparator) {
     this.head = Array(maxHeight).fill(null); //Initialize head as array of nulls
-    this.getRandom = function () {
-      // This function will be provided in the ctor, but now it is hard-coded
-      return Math.ceil(Math.random() * maxHeight);
-    };
     // If no comparator is provided, use the default one
     this.comparator = comparator || function (a, b) {
       if (a > b) {
@@ -27,6 +23,16 @@ export class SkipList {
   };
 
   /**
+   * Static method that returns a random number from some magic distributon
+   * @param maxHeight
+   * @returns {number}
+   */
+  static randomHeight (maxHeight) {
+    const rnd = Math.random() * maxHeight ** 2;
+    return Math.floor(maxHeight - Math.sqrt(rnd));
+  }
+
+  /**
    * Adds new SkipNode to the SkipList
    * @param {*} node
    * @returns {SkipList}
@@ -35,11 +41,12 @@ export class SkipList {
     // If node provided is not an instance of SkipNode, call the SkipNode ctor
     node = (node instanceof SkipNode) ? node : new SkipNode(node);
     // Pick a random height
-    node.height = this.getRandom();
+    node.height = 1 + SkipList.randomHeight(this.head.length);
     node.next = Array(node.height).fill(null);
 
     let leftLinks = this.search(node);
     if (leftLinks.length === 0) {
+      // No left links => this is the first element, modify only head
       for (let i = 0; i < node.height; i++) {
         let previousHead = this.head[i];
         this.head[i] = node;
@@ -47,10 +54,12 @@ export class SkipList {
       }
       return this;
     }
+    // There are some links => modify them
     for (let i = 0; i < node.height; i++) {
       let leftLink = leftLinks[i];
 
       if (leftLink) {
+        //leftLink is NOT undefined => it does not point to NULL => modify it
         let previous = leftLink.next[i];
         leftLinks[i].next[i] = node;
         node.next[i] = previous;
@@ -65,16 +74,18 @@ export class SkipList {
    * @returns {SkipList}
    */
   remove (nodeToRemove) {
-    let node = (nodeToRemove instanceof SkipNode) ? nodeToRemove : new SkipNode(nodeToRemove);
+    let node = (nodeToRemove instanceof SkipNode) ? nodeToRemove : new SkipNode(
+      nodeToRemove);
     node = this.find(node);
     if (node) {
       let leftLinks = this.search(node);
       if (leftLinks.length === 0) {
-        //this is the first element
+        // No left links => this is the first element, modify only head
         for (let i = 0; i < node.height; i++) {
           this.head[i] = node.next[i];
         }
       } else {
+        // There are some links => modify them
         for (let j = 0; j < node.height; j++) {
           let leftLink = leftLinks[j];
           if (leftLink) {
@@ -142,7 +153,7 @@ export class SkipList {
       let current = this.head[i];
       outputString += '\nlevel ' + (i + 1) + '\n';
       while (current !== null) {
-        if(showField){
+        if (showField) {
           outputString += (' -> ' + current.value[showField]);
         } else {
           outputString += (' -> ' + current.value);
@@ -154,5 +165,4 @@ export class SkipList {
 
     return outputString;
   }
-
 }
