@@ -67,6 +67,7 @@ list.add(new SkipNode(7)).
      add(new SkipNode(6)).
      add(5).
      add(105).
+     add(222).
      add(new SkipNode(4)).
      add(new SkipNode(3)).
      add(new SkipNode(2)).
@@ -79,7 +80,7 @@ peopleList.add({id: 4, name: 'Dennis'}).
            add({id: 3, name: 'Charlie'}).
            add({id: 5, name: 'Endrju'}).
            add({id: 1, name: 'Andrzej'});
-peopleList.remove({id: 1, name: 'Andrzej'});
+peopleList.remove({id: 2, name: 'Barbara'});
 
 console.log(list.printLevels());
 console.log(peopleList.printLevels('name'));
