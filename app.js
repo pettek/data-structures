@@ -44,22 +44,15 @@ import { SkipNode, SkipList } from './src/skip-list';
 
 let list = new SkipList(5);
 
-let a = list.search(new SkipNode(2));
-
-list.add(new SkipNode(1));
-
-let b = list.search(new SkipNode(2));
-
-list.add(new SkipNode(3));
-list.add(new SkipNode(8));
-list.add(new SkipNode(9));
-list.add(new SkipNode(11));
-list.add(new SkipNode(12));
-list.addNew(new SkipNode(10));
-list.addNew(new SkipNode(6));
-
-let c = list.find(new SkipNode(7));
-
+list.add(new SkipNode(7))
+    .add(new SkipNode(6))
+    .add(new SkipNode(5))
+    .add(new SkipNode(4))
+    .add(new SkipNode(3))
+    .add(new SkipNode(2))
+    .add(new SkipNode(1));
+let d = list.remove(new SkipNode(4));
 
 console.log(list.printLevels());
+console.log(d);
 {}

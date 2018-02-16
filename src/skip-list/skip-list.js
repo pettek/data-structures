@@ -20,43 +20,63 @@ export class SkipList {
    * @returns {SkipList}
    */
 
-  addNew (node) {
+  add (node) {
     node.height = this.getRandom();
     node.next = Array(node.height).fill(null);
 
     let leftLinks = this.search(node);
+    if (leftLinks.length === 0) {
+      for (let i = 0; i < node.height; i++) {
+        let previousHead = this.head[this.head.length - node.height + i];
+        this.head[this.head.length - node.height + i] = node;
+        node.next[i] = previousHead;
+      }
+      return this;
+    }
     for (let i = 0; i < node.height; i++) {
       let leftLink = leftLinks[i + this.head.length - node.height];
 
       if (leftLink) {
         let previous = leftLink.next[leftLink.next.length - node.height + i];
-        leftLinks[i + this.head.length - node.height].next[i + leftLink.next.length - node.height] = node;
+        leftLinks[i + this.head.length - node.height].next[i +
+        leftLink.next.length - node.height] = node;
         node.next[i] = previous;
       }
     }
-  }
-
-  add (node) {
-    node.height = this.getRandom();
-    node.next = Array(node.height).fill(null);
-
-    for (let i = 0; i < node.height; i++) {
-      let currentHeadLevel = this.head.length - node.next.length + i;
-      if (this.head[currentHeadLevel] === null) {
-        this.head[currentHeadLevel] = node;
-      } else {
-        let currentNode = this.head[currentHeadLevel];
-        let currentNodeLevel = currentNode.next.length - node.next.length + i;
-        while (currentNode.next[currentNodeLevel] !== null) {
-          currentNode = currentNode.next[currentNodeLevel];
-          currentNodeLevel = currentNode.next.length - node.next.length + i;
-        }
-        currentNode.next[currentNodeLevel] = node;
-      }
-    }
-
     return this;
   }
+
+  remove (node) {
+    if(this.find(node)) {
+      return this.search(node);
+    } else {
+      return null;
+    }
+  }
+
+  //Deprecated version of add method (kept it just in case)
+  /*
+   add (node) {
+   node.height = this.getRandom();
+   node.next = Array(node.height).fill(null);
+
+   for (let i = 0; i < node.height; i++) {
+   let currentHeadLevel = this.head.length - node.next.length + i;
+   if (this.head[currentHeadLevel] === null) {
+   this.head[currentHeadLevel] = node;
+   } else {
+   let currentNode = this.head[currentHeadLevel];
+   let currentNodeLevel = currentNode.next.length - node.next.length + i;
+   while (currentNode.next[currentNodeLevel] !== null) {
+   currentNode = currentNode.next[currentNodeLevel];
+   currentNodeLevel = currentNode.next.length - node.next.length + i;
+   }
+   currentNode.next[currentNodeLevel] = node;
+   }
+   }
+
+   return this;
+   }*/
 
   find (node) {
     for (let i = 0; i < this.head.length; i++) {
@@ -75,7 +95,7 @@ export class SkipList {
     let leftLinks = [];
     for (let i = 0; i < this.head.length; i++) {
       let current = this.head[i];
-      while (current !== null && current.value <= node.value) {
+      while (current !== null && current.value < node.value) {
         leftLinks[i] = current;
         current = current.next[i - this.head.length + current.next.length];
       }
