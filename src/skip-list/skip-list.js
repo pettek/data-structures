@@ -6,12 +6,15 @@ export class SkipList {
   /**
    * @constructor Represents a SkipList
    * @param maxHeight
+   * @param comparator
    */
   constructor (maxHeight, comparator) {
-    this.head = Array(maxHeight).fill(null);
+    this.head = Array(maxHeight).fill(null); //Initialize head as array of nulls
     this.getRandom = function () {
+      // This function will be provided in the ctor, but now it is hard-coded
       return Math.ceil(Math.random() * maxHeight);
     };
+    // If no comparator is provided, use the default one
     this.comparator = comparator || function (a, b) {
       if (a > b) {
         return 1;
@@ -25,32 +28,31 @@ export class SkipList {
 
   /**
    * Adds new SkipNode to the SkipList
-   * Function will not work properly if node is not an instance of SkipNode
-   * @todo Make it work for all the different types of data
-   * @param node
+   * @param {*} node
    * @returns {SkipList}
    */
   add (node) {
+    // If node provided is not an instance of SkipNode, call the SkipNode ctor
     node = (node instanceof SkipNode) ? node : new SkipNode(node);
+    // Pick a random height
     node.height = this.getRandom();
     node.next = Array(node.height).fill(null);
 
     let leftLinks = this.search(node);
     if (leftLinks.length === 0) {
       for (let i = 0; i < node.height; i++) {
-        let previousHead = this.head[this.head.length - node.height + i];
-        this.head[this.head.length - node.height + i] = node;
+        let previousHead = this.head[i];
+        this.head[i] = node;
         node.next[i] = previousHead;
       }
       return this;
     }
     for (let i = 0; i < node.height; i++) {
-      let leftLink = leftLinks[i + this.head.length - node.height];
+      let leftLink = leftLinks[i];
 
       if (leftLink) {
-        let previous = leftLink.next[leftLink.next.length - node.height + i];
-        leftLinks[i + this.head.length - node.height].next[i +
-        leftLink.next.length - node.height] = node;
+        let previous = leftLink.next[i];
+        leftLinks[i].next[i] = node;
         node.next[i] = previous;
       }
     }
@@ -70,14 +72,13 @@ export class SkipList {
       if (leftLinks.length === 0) {
         //this is the first element
         for (let i = 0; i < node.height; i++) {
-          this.head[i + this.head.length - node.height] = node.next[i];
+          this.head[i] = node.next[i];
         }
       } else {
         for (let j = 0; j < node.height; j++) {
-          let leftLink = leftLinks[j - node.height + leftLinks.length];
+          let leftLink = leftLinks[j];
           if (leftLink) {
-            leftLink.next[j + leftLink.next.length -
-            node.height] = node.next[j];
+            leftLink.next[j] = node.next[j];
           } else {
             //leftLink undefined - so it we must modify head
             this.head[j] = node.next[j];
@@ -95,14 +96,14 @@ export class SkipList {
    * @returns {*}
    */
   find (node) {
-    for (let i = 0; i < this.head.length; i++) {
+    for (let i = (this.head.length - 1); i >= 0; i--) {
       let current = this.head[i];
       while (current !== null &&
       this.comparator(current.value, node.value) < 1) {
         if (this.comparator(current.value, node.value) === 0) {
           return current;
         }
-        current = current.next[i - this.head.length + current.next.length];
+        current = current.next[i];
       }
     }
     return null;
@@ -119,12 +120,12 @@ export class SkipList {
    */
   search (node) {
     let leftLinks = [];
-    for (let i = 0; i < this.head.length; i++) {
+    for (let i = (this.head.length - 1); i >= 0; i--) {
       let current = this.head[i];
       while (current !== null &&
       this.comparator(current.value, node.value) < 0) {
         leftLinks[i] = current;
-        current = current.next[i - this.head.length + current.next.length];
+        current = current.next[i];
       }
     }
     return leftLinks;
@@ -137,9 +138,9 @@ export class SkipList {
    */
   printLevels (showField) {
     let outputString = '';
-    for (let i = 0; i < this.head.length; i++) {
+    for (let i = (this.head.length - 1); i >= 0; i--) {
       let current = this.head[i];
-      outputString += '\nlevel ' + (this.head.length - i) + '\n';
+      outputString += '\nlevel ' + (i + 1) + '\n';
       while (current !== null) {
         if(showField){
           outputString += (' -> ' + current.value[showField]);
@@ -147,7 +148,7 @@ export class SkipList {
           outputString += (' -> ' + current.value);
         }
 
-        current = current.next[i - this.head.length + current.next.length];
+        current = current.next[i];
       }
     }
 
