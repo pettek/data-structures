@@ -41,25 +41,8 @@ import { SkipNode, SkipList } from './src/skip-list';
 //
 // let skipList = new SkipList();
 // }
-let numberDesc = function (a, b) {
-  if (a < b) {
-    return -1;
-  } else if (a > b) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
-
-let idAsc = function (a, b) {
-  if (a.id > b.id) {
-    return 1;
-  } else if (b.id > a.id) {
-    return -1;
-  } else {
-    return 0;
-  }
-};
+let numberDesc = (a, b) => (a < b) ? 1 : ((a > b) ? -1 : 0);
+let idAsc = (a, b) => (a.id > b.id) ? 1 : ((a.id < b.id) ? -1 : 0);
 
 let list = new SkipList(6, numberDesc);
 list.remove(222).
