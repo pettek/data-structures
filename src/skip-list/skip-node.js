@@ -26,6 +26,4 @@ export class SkipNode {
   addNext (node) {
     this._next.push(node);
   }
-
-
 }
