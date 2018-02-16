@@ -47,7 +47,7 @@ export class SkipList {
     let leftLinks = this.search(node);
     if (leftLinks.length === 0) {
       // No left links => this is the first element, modify only head
-      for (let i = 0; i < node.height; i++) {
+      for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
         let previousHead = this.head[i];
         this.head[i] = node;
         node.next[i] = previousHead;
@@ -55,7 +55,7 @@ export class SkipList {
       return this;
     }
     // There are some links => modify them
-    for (let i = 0; i < node.height; i++) {
+    for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
       let leftLink = leftLinks[i];
 
       if (leftLink) {
@@ -81,17 +81,17 @@ export class SkipList {
       let leftLinks = this.search(node);
       if (leftLinks.length === 0) {
         // No left links => this is the first element, modify only head
-        for (let i = 0; i < node.height; i++) {
+        for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
           this.head[i] = node.next[i];
         }
       } else {
         // There are some links => modify them
-        for (let j = 0; j < node.height; j++) {
+        for (let j = 0; j < node.height; j++) { // Go through levels from 0 to node's height
           let leftLink = leftLinks[j];
           if (leftLink) {
             leftLink.next[j] = node.next[j];
           } else {
-            //leftLink undefined - so it we must modify head
+            //leftLink undefined => modify head (its value is null)
             this.head[j] = node.next[j];
           }
         }
@@ -107,11 +107,11 @@ export class SkipList {
    * @returns {*}
    */
   find (node) {
-    for (let i = (this.head.length - 1); i >= 0; i--) {
+    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
       while (current !== null &&
-      this.comparator(current.value, node.value) < 1) {
-        if (this.comparator(current.value, node.value) === 0) {
+      this.comparator(current.value, node.value) < 1) { // First parameter is less than or equal to second parameter
+        if (this.comparator(current.value, node.value) === 0) { // First parameter is equal to second parameter
           return current;
         }
         current = current.next[i];
@@ -131,10 +131,10 @@ export class SkipList {
    */
   search (node) {
     let leftLinks = [];
-    for (let i = (this.head.length - 1); i >= 0; i--) {
+    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
       while (current !== null &&
-      this.comparator(current.value, node.value) < 0) {
+      this.comparator(current.value, node.value) < 0) { // First parameter is less than second parameter
         leftLinks[i] = current;
         current = current.next[i];
       }
@@ -149,7 +149,7 @@ export class SkipList {
    */
   printLevels (showField) {
     let outputString = '';
-    for (let i = (this.head.length - 1); i >= 0; i--) {
+    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
       outputString += '\nlevel ' + (i + 1) + '\n';
       while (current !== null) {
@@ -158,7 +158,6 @@ export class SkipList {
         } else {
           outputString += (' -> ' + current.value);
         }
-
         current = current.next[i];
       }
     }
