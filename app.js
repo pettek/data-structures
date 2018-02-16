@@ -62,8 +62,8 @@ let idAsc = function (a, b) {
 };
 
 let list = new SkipList(6, numberDesc);
-
-list.add(new SkipNode(7)).
+list.remove(222).
+     add(new SkipNode(7)).
      add(new SkipNode(6)).
      add(5).
      add(105).
@@ -72,15 +72,17 @@ list.add(new SkipNode(7)).
      add(new SkipNode(3)).
      add(new SkipNode(2)).
      add(new SkipNode(1)).
-     remove(new SkipNode(5));
+     remove(4).
+     remove(5);
 
 let peopleList = new SkipList(4, idAsc);
-peopleList.add({id: 4, name: 'Dennis'}).
-           add({id: 2, name: 'Barbara'}).
+peopleList.remove({id: 321}).
+           add({id: 4, name: 'Dennis'}).
+           add({id: 22, name: 'John'}).
            add({id: 3, name: 'Charlie'}).
            add({id: 5, name: 'Endrju'}).
            add({id: 1, name: 'Andrzej'}).
-           remove({id: 5});
+           remove({id: 66});
 
 console.log(list.printLevels());
 console.log(peopleList.printLevels('name'));
