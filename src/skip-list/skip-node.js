@@ -1,6 +1,13 @@
 'use strict';
 
 export class SkipNode {
+  /**
+   *
+   * @constructor Represents a node
+   * @param value
+   * @param height (optional) - providing height helps with debugging, but it's
+   * overridden when randomizing it
+   */
   constructor (value, height = 0) {
     this.value = value;
     this._next = [];

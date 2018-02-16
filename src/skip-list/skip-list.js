@@ -46,14 +46,17 @@ export class SkipList {
 
     let leftLinks = this.search(node);
     if (leftLinks.length === 0) {
+
       // No left links => this is the first element, modify only head
       for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
         let previousHead = this.head[i];
         this.head[i] = node;
         node.next[i] = previousHead;
       }
+
       return this;
     }
+
     // There are some links => modify them
     for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
       let leftLink = leftLinks[i];
@@ -65,6 +68,7 @@ export class SkipList {
         node.next[i] = previous;
       }
     }
+
     return this;
   }
 
@@ -77,17 +81,21 @@ export class SkipList {
     let node = (nodeToRemove instanceof SkipNode) ? nodeToRemove : new SkipNode(
       nodeToRemove);
     node = this.find(node);
+
     if (node) {
       let leftLinks = this.search(node);
       if (leftLinks.length === 0) {
+
         // No left links => this is the first element, modify only head
         for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
           this.head[i] = node.next[i];
         }
       } else {
+
         // There are some links => modify them
         for (let j = 0; j < node.height; j++) { // Go through levels from 0 to node's height
           let leftLink = leftLinks[j];
+
           if (leftLink) {
             leftLink.next[j] = node.next[j];
           } else {
@@ -97,6 +105,7 @@ export class SkipList {
         }
       }
     }
+
     return this;
   }
 
@@ -109,6 +118,7 @@ export class SkipList {
   find (node) {
     for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
+
       while (current !== null &&
       this.comparator(current.value, node.value) < 1) { // First parameter is less than or equal to second parameter
         if (this.comparator(current.value, node.value) === 0) { // First parameter is equal to second parameter
@@ -117,6 +127,7 @@ export class SkipList {
         current = current.next[i];
       }
     }
+
     return null;
   }
 
@@ -131,14 +142,17 @@ export class SkipList {
    */
   search (node) {
     let leftLinks = [];
+
     for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
+
       while (current !== null &&
       this.comparator(current.value, node.value) < 0) { // First parameter is less than second parameter
         leftLinks[i] = current;
         current = current.next[i];
       }
     }
+
     return leftLinks;
   }
 
@@ -149,9 +163,11 @@ export class SkipList {
    */
   printLevels (showField) {
     let outputString = '';
+
     for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
       outputString += '\nlevel ' + (i + 1) + '\n';
+
       while (current !== null) {
         if (showField) {
           outputString += (' -> ' + current.value[showField]);
