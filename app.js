@@ -83,5 +83,12 @@ import { Node, BST } from './src/bst';
 
 let tree = new BST();
 tree.add(new Node(3));
+tree.add(new Node(5));
+tree.add(new Node(7));
+tree.add(new Node(1));
+tree.add(new Node(10));
+tree.add(new Node(11));
+let a = tree.find(new Node(5));
+let b = tree.find(new Node(3));
 
 {}
