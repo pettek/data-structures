@@ -71,4 +71,10 @@ peopleList.remove({id: 321}).
            remove({id: 66});
 
 console.log(peopleList.printLevels('name'));
+
+console.log(list.toArray());
+console.log(peopleList.toArray('name'));
+
+console.log(list.toString());
+console.log(peopleList.toString('name'));
 {}

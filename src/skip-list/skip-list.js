@@ -169,4 +169,41 @@ export class SkipList {
 
     return outputString;
   }
+
+  /**
+   * Returns an array representing the data
+   * @returns {Array}
+   */
+  toArray(field) {
+    let current = this.head[0];
+    let array = [];
+    while (current !== null) {
+      if(field) {
+        array.push(current.value[field]);
+      } else {
+        array.push(current.value);
+      }
+      current = current.next[0];
+    }
+    return array;
+  }
+
+  /**
+   * Returns a string representing the data
+   * @returns {string}
+   */
+  toString(field) {
+    let current = this.head[0];
+    let string = '';
+    while (current !== null) {
+      if(field) {
+        string += current.value[field];
+      } else {
+        string += current.value;
+      }
+      string += " ";
+      current = current.next[0];
+    }
+    return string;
+  }
 }
