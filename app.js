@@ -1,7 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-import { SkipNode, SkipList } from './src/skip-list';
+// import { SkipNode, SkipList } from './src/skip-list';
+import { Node, BST } from './src/bst';
 
 // {
 // function descOrder (a, b) {
@@ -41,40 +42,46 @@ import { SkipNode, SkipList } from './src/skip-list';
 //
 // let skipList = new SkipList();
 // }
-let numberDesc = (a, b) => (b - a);
-let idAsc = (a, b) => (a.id - b.id);
+// {
+//   let numberDesc = (a, b) => (b - a);
+//   let idAsc = (a, b) => (a.id - b.id);
+//
+//   let list = new SkipList();
+//
+//   list.remove(222).
+//        add(new SkipNode(7)).
+//        add(new SkipNode(6)).
+//        add(5).
+//        add(105).
+//        add(222).
+//        add(new SkipNode(4)).
+//        add(new SkipNode(3)).
+//        add(new SkipNode(2)).
+//        add(new SkipNode(1)).
+//        remove(4).
+//        remove(5);
+//
+//   console.log(list.printLevels());
+//
+//   let peopleList = new SkipList({comparator: idAsc, height: 3});
+//   peopleList.remove({id: 321}).
+//              add({id: 4, name: 'Dennis'}).
+//              add({id: 22, name: 'John'}).
+//              add({id: 3, name: 'Charlie'}).
+//              add({id: 5, name: 'Endrju'}).
+//              add({id: 1, name: 'Andrzej'}).
+//              remove({id: 66});
+//
+//   console.log(peopleList.printLevels('name'));
+//
+//   console.log(list.toArray());
+//   console.log(peopleList.toArray('name'));
+//
+//   console.log(list.toString());
+//   console.log(peopleList.toString('name'));
+// }
 
-let list = new SkipList();
+let tree = new BST();
+tree.add(new Node(3));
 
-list.remove(222).
-     add(new SkipNode(7)).
-     add(new SkipNode(6)).
-     add(5).
-     add(105).
-     add(222).
-     add(new SkipNode(4)).
-     add(new SkipNode(3)).
-     add(new SkipNode(2)).
-     add(new SkipNode(1)).
-     remove(4).
-     remove(5);
-
-console.log(list.printLevels());
-
-let peopleList = new SkipList({comparator: idAsc, height: 3});
-peopleList.remove({id: 321}).
-           add({id: 4, name: 'Dennis'}).
-           add({id: 22, name: 'John'}).
-           add({id: 3, name: 'Charlie'}).
-           add({id: 5, name: 'Endrju'}).
-           add({id: 1, name: 'Andrzej'}).
-           remove({id: 66});
-
-console.log(peopleList.printLevels('name'));
-
-console.log(list.toArray());
-console.log(peopleList.toArray('name'));
-
-console.log(list.toString());
-console.log(peopleList.toString('name'));
 {}
