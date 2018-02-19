@@ -56,7 +56,82 @@ export class BST {
   }
 
   remove (node) {
-    if(this.find(node)) return true;
-    else return false;
+    let nodeToRemove = this.find(node);
+    if (nodeToRemove) { // Check if node is in the tree
+      if (nodeToRemove.right === null) { // Check if the node has a no right child
+        if (!nodeToRemove.parent) {
+          this.root = nodeToRemove.left;
+          this.root.parent = null;
+        } else {
+          if (nodeToRemove === nodeToRemove.parent.left) {
+            nodeToRemove.parent.left = nodeToRemove.left;
+          } else {
+            nodeToRemove.parent.right = nodeToRemove.left;
+          }
+          if (nodeToRemove.left) {
+            nodeToRemove.left.parent = nodeToRemove.parent;
+          }
+        }
+      }
+
+      else if (nodeToRemove.right.left === null) { // Check if the node's right child has no left child
+        if (!nodeToRemove.parent) {
+          nodeToRemove.right.left = nodeToRemove.left;
+          this.root.left.parent = nodeToRemove.right;
+          this.root = nodeToRemove.right;
+          this.root.parent = null;
+        } else {
+          if (nodeToRemove === nodeToRemove.parent.left) {
+            nodeToRemove.parent.left = nodeToRemove.right;
+          } else {
+            nodeToRemove.parent.right = nodeToRemove.right;
+          }
+          nodeToRemove.right.parent = nodeToRemove.parent;
+          nodeToRemove.right.left = nodeToRemove.left;
+          nodeToRemove.left.parent = nodeToRemove.right;
+        }
+      }
+
+      else { // Every other case
+        if (!nodeToRemove.parent) {
+
+        } else {
+          let current = nodeToRemove.right;
+          while (current.left !== null) {
+            current = current.left;
+          }
+          let parent = current.parent;
+          if (nodeToRemove === nodeToRemove.parent.left) {
+            nodeToRemove.parent.left = current;
+          } else {
+            nodeToRemove.parent.right = current;
+          }
+          current.parent = nodeToRemove.parent;
+          parent.left = current.right;
+          current.left = nodeToRemove.left;
+          current.right = nodeToRemove.right;
+        }
+        return true;
+      }
+    }
+    else {
+      return false;
+    }
+  }
+
+  _findSuccessor (node) {
+    let current = node;
+    if (current.right !== null) {
+      current = current.right;
+      while (current.left !== null) {
+        current = current.left;
+      }
+      return current;
+    } else {
+      while (current !== current.parent.left) {
+        current = current.parent;
+      }
+      return current.parent;
+    }
   }
 }

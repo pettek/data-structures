@@ -1,8 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-// import { SkipNode, SkipList } from './src/skip-list';
-import { Node, BST } from './src/bst';
+import { SkipNode, SkipList } from './src/skip-list';
+// import { Node, BST } from './src/bst';
 
 // {
 // function descOrder (a, b) {
@@ -41,25 +41,14 @@ import { Node, BST } from './src/bst';
 //             .add({name: 'Osoba2', age: 100});
 //
 // let skipList = new SkipList();
-// }
-// {
+//
 //   let numberDesc = (a, b) => (b - a);
 //   let idAsc = (a, b) => (a.id - b.id);
 //
 //   let list = new SkipList();
 //
-//   list.remove(222).
-//        add(new SkipNode(7)).
-//        add(new SkipNode(6)).
-//        add(5).
-//        add(105).
-//        add(222).
-//        add(new SkipNode(4)).
-//        add(new SkipNode(3)).
-//        add(new SkipNode(2)).
-//        add(new SkipNode(1)).
-//        remove(4).
-//        remove(5);
+//   list.add(1).add(2).add(3).add(4).add(5).add(6).add(7).add(8);
+//   let y = list.find(new SkipNode(8));
 //
 //   console.log(list.printLevels());
 //
@@ -79,16 +68,21 @@ import { Node, BST } from './src/bst';
 //
 //   console.log(list.toString());
 //   console.log(peopleList.toString('name'));
-// }
 
 let tree = new BST();
-tree.add(new Node(3));
-tree.add(new Node(5));
-tree.add(new Node(7));
-tree.add(new Node(1));
-tree.add(new Node(10));
-tree.add(new Node(11));
-let a = tree.find(new Node(5));
-let b = tree.find(new Node(3));
+tree.add(new Node(40));
+tree.add(new Node(30));
+// tree.add(new Node(50));
+tree.add(new Node(20));
+tree.add(new Node(39));
+tree.add(new Node(35));
+// tree.add(new Node(45));
+// tree.add(new Node(55));
+
+let x = tree.find(new Node(40));
+let a = tree._findSuccessor(x);
+// let b = tree._findSuccessor(tree.find(new Node(30)));
+// let c = tree._findSuccessor(tree.find(new Node(39)));
+
 
 {}
