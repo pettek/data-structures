@@ -1,35 +1,24 @@
 'use strict';
 
-import { SkipNode } from './skip-node';
+import { SkipNode }     from './skip-node';
+import { DEFAULT_ARGS } from './skip-list-constants';
 
 export class SkipList {
   /**
-   * @constructor Represents a SkipList
-   * @param maxHeight
+   *
    * @param comparator
+   * @param generator
+   * @param height
    */
-  constructor (maxHeight, comparator) {
-    this.head = Array(maxHeight).fill(null); //Initialize head as array of nulls
-    // If no comparator is provided, use the default one
-    this.comparator = comparator || function (a, b) {
-      if (a > b) {
-        return 1;
-      } else if (a < b) {
-        return -1;
-      } else {
-        return 0;
-      }
-    };
-  };
-
-  /**
-   * Static method that returns a random number from some magic distributon
-   * @param maxHeight
-   * @returns {number}
-   */
-  static randomHeight (maxHeight) {
-    const rnd = Math.random() * maxHeight ** 2;
-    return Math.floor(maxHeight - Math.sqrt(rnd));
+  constructor ({
+                 comparator = DEFAULT_ARGS.comparator,
+                 generator = DEFAULT_ARGS.generator,
+                 height = DEFAULT_ARGS.height,
+               } = {}) {
+    this.comparator = comparator;
+    this.generateHeight = generator;
+    this.maxHeight = height;
+    this.head = Array(this.maxHeight).fill(null);
   }
 
   /**
@@ -41,7 +30,7 @@ export class SkipList {
     // If node provided is not an instance of SkipNode, call the SkipNode ctor
     node = (node instanceof SkipNode) ? node : new SkipNode(node);
     // Pick a random height
-    node.height = 1 + SkipList.randomHeight(this.head.length);
+    node.height = this.generateHeight(this.maxHeight);
     node.next = Array(node.height).fill(null);
 
     let leftLinks = this.search(node);
@@ -116,7 +105,7 @@ export class SkipList {
    * @returns {*}
    */
   find (node) {
-    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
+    for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
 
       while (current !== null &&
@@ -143,7 +132,7 @@ export class SkipList {
   search (node) {
     let leftLinks = [];
 
-    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
+    for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
 
       while (current !== null &&
@@ -164,7 +153,7 @@ export class SkipList {
   printLevels (showField) {
     let outputString = '';
 
-    for (let i = (this.head.length - 1); i >= 0; i--) { // Go through levels from head's height to 0
+    for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
       outputString += '\nlevel ' + (i + 1) + '\n';
 

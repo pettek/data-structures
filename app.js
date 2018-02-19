@@ -41,10 +41,11 @@ import { SkipNode, SkipList } from './src/skip-list';
 //
 // let skipList = new SkipList();
 // }
-let numberDesc = (a, b) => (a < b) ? 1 : ((a > b) ? -1 : 0);
-let idAsc = (a, b) => (a.id > b.id) ? 1 : ((a.id < b.id) ? -1 : 0);
+let numberDesc = (a, b) => (b - a);
+let idAsc = (a, b) => (a.id - b.id);
 
-let list = new SkipList(6, numberDesc);
+let list = new SkipList();
+
 list.remove(222).
      add(new SkipNode(7)).
      add(new SkipNode(6)).
@@ -58,7 +59,9 @@ list.remove(222).
      remove(4).
      remove(5);
 
-let peopleList = new SkipList(4, idAsc);
+console.log(list.printLevels());
+
+let peopleList = new SkipList({comparator: idAsc, height: 3});
 peopleList.remove({id: 321}).
            add({id: 4, name: 'Dennis'}).
            add({id: 22, name: 'John'}).
@@ -67,6 +70,5 @@ peopleList.remove({id: 321}).
            add({id: 1, name: 'Andrzej'}).
            remove({id: 66});
 
-console.log(list.printLevels());
 console.log(peopleList.printLevels('name'));
 {}
