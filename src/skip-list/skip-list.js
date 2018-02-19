@@ -105,6 +105,7 @@ export class SkipList {
    * @returns {*}
    */
   find (node) {
+    node = (node instanceof SkipNode) ? node : new SkipNode(node);
     for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
 
