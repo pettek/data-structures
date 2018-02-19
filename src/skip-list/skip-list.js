@@ -174,11 +174,11 @@ export class SkipList {
    * Returns an array representing the data
    * @returns {Array}
    */
-  toArray(field) {
+  toArray (field) {
     let current = this.head[0];
     let array = [];
     while (current !== null) {
-      if(field) {
+      if (field) {
         array.push(current.value[field]);
       } else {
         array.push(current.value);
@@ -192,16 +192,16 @@ export class SkipList {
    * Returns a string representing the data
    * @returns {string}
    */
-  toString(field) {
+  toString (field) {
     let current = this.head[0];
     let string = '';
     while (current !== null) {
-      if(field) {
+      if (field) {
         string += current.value[field];
       } else {
         string += current.value;
       }
-      string += " ";
+      string += ' ';
       current = current.next[0];
     }
     return string;
