@@ -1,1 +1,3 @@
-#Data structures
+# Data structures
+* List
+* SkipList
