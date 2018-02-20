@@ -1,6 +1,8 @@
 import { Node }         from './node';
 import { DEFAULT_ARGS } from './bst-constants';
 
+const SORT_METHOD_ASC = 'asc';
+
 export class BST {
 
   /**
@@ -35,7 +37,7 @@ export class BST {
             break;
           }
           current = current.left; // There is a left child, go there
-        } else if(this.compare(current.value, node.value) < 0){ // Node's value is higher than current one's
+        } else if (this.compare(current.value, node.value) < 0) { // Node's value is higher than current one's
 
           // There is no right child
           if (current.right === null) {
@@ -297,11 +299,11 @@ export class BST {
   /**
    * Returns a node with the smallest value in the tree, if the tree if empty,
    * it returns null
-   * @returns {*}
+   * @param {Node} current
+   * @returns {Node | null}
    * @private
    */
-  _findMin () {
-    let current = this.root; // Start from the root
+  _findMin (current) {
 
     // Tree is empty -> return null
     if (current === null) {
@@ -319,11 +321,11 @@ export class BST {
   /**
    * Returns a node with the highest value in the tree, if the tree is empty, it
    * returns null
-   * @returns {*}
+   * @param {Node} current
+   * @returns {Node | null}
    * @private
    */
-  _findMax () {
-    let current = this.root; // Start from the root
+  _findMax (current) {
 
     // Tree is empty -> return null
     if (current === null) {
@@ -343,14 +345,22 @@ export class BST {
    * internal structure of the tree
    * @returns {Array}
    */
-  toArray () {
-    let current = this._findMin(); // Start from the minimal value
+  toArray (sort = SORT_METHOD_ASC) {
+    const findMethod = (sort === SORT_METHOD_ASC)
+      ? this._findSuccessor
+      : this._findPredecessor;
+
+    // Start from the minimal value
+    let current = (sort === SORT_METHOD_ASC)
+      ? this._findMin(this.root)
+      : this._findMax(this.root);
+
     let array = [];
 
     // Loop for as long as there is a successor
     while (current !== null) {
       array.push(current.value);
-      current = this._findSuccessor(current); // Go to the next value
+      current = findMethod(current); // Go to the next value
     }
     return array;
   }
@@ -361,7 +371,7 @@ export class BST {
    * @returns {string}
    */
   toString () {
-    let current = this._findMin(); // Start from the minimal value
+    let current = this._findMin(this.root); // Start from the minimal value
     let string = '';
 
     // Loop for as long as there is a successor
