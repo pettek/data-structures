@@ -49,17 +49,27 @@ const list = new SkipList();
 
 const array = [];
 let rand;
-for(let i = 0; i < 10000; i++){
-  rand = Math.floor(Math.random() * 10);
+for(let i = 0; i < 100; i++){
+  rand = Math.floor(Math.random() * 10000);
   array.push(rand);
   list.add(rand);
 }
 
+const expected = [];
 for(let j = 0; j < array.length; j++){
-  if(j % 4 === 0) list.remove(array[j]);
+  if(j % 2 === 0) {
+    list.remove(array[j]);
+  } else {
+    expected.push(array[j]);
+  }
 }
 
-console.log(list.toArray().length);
+let expSorted = expected.sort((a, b) => a - b);
+let listSorted = list.toArray();
+
+for(let k = 0; k < expSorted.length; k++) {
+  console.log(expSorted[k] + "  " + listSorted[k]);
+}
 
 
 // // Init some constants

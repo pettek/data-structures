@@ -73,6 +73,14 @@ export class SkipList {
       nodeToRemove);
     let leftLinks = this.search(node);
 
+    /*
+     * It's a kind of magic
+     * First, check if there is a left link of the first level and if it points
+     * to the correct value. Second, check whether it is the first element after
+     * head. In both those cases, return where link/head points to. Otherwise,
+     * return null -> this element cannot be found in the tree.
+     * All in all, it really just replaces the find method...
+     */
     node = (leftLinks[0] &&
       leftLinks[0].next[0].value === node.value)
       ? leftLinks[0].next[0]
@@ -81,21 +89,23 @@ export class SkipList {
         : null);
 
     if (node) {
+      // No left links => this is the first element, modify only head
       if (leftLinks.length === 0) {
 
-        // No left links => this is the first element, modify only head
-        for (let i = 0; i < node.height; i++) { // Go through levels from 0 to node's height
+        // Go through levels from 0 to node's height
+        for (let i = 0; i < node.height; i++) {
           this.head[i] = node.next[i];
         }
-      } else {
+      } else { // There are some links => modify them
 
-        // There are some links => modify them
-        for (let j = 0; j < node.height; j++) { // Go through levels from 0 to node's height
+        // Go through levels from 0 to node's height
+        for (let j = 0; j < node.height; j++) {
           let leftLink = leftLinks[j];
 
           if (leftLink) {
             leftLink.next[j] = node.next[j];
           } else {
+
             //leftLink undefined => modify head (its value is null)
             this.head[j] = node.next[j];
           }
