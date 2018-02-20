@@ -7,4 +7,8 @@ export class Node {
     this.right = null;
     this.parent = null;
   }
+
+  get isRoot () {
+    return this.parent === null;
+  }
 }

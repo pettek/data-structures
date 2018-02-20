@@ -70,9 +70,10 @@ export class SkipList {
     let node = (nodeToRemove instanceof SkipNode) ? nodeToRemove : new SkipNode(
       nodeToRemove);
     node = this.find(node);
-
+    console.log('+');
     if (node) {
       let leftLinks = this.search(node);
+      console.log('+');
       if (leftLinks.length === 0) {
 
         // No left links => this is the first element, modify only head
@@ -94,7 +95,7 @@ export class SkipList {
         }
       }
     }
-
+    console.log('+');
     return this;
   }
 
@@ -135,9 +136,8 @@ export class SkipList {
 
     for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
-
-      while (current !== null &&
-      this.comparator(current.value, node.value) < 0) { // First parameter is less than second parameter
+      while (current !== null && current !== node &&
+      this.comparator(current.value, node.value) <= 0) { // First parameter is less than second parameter
         leftLinks[i] = current;
         current = current.next[i];
       }

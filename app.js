@@ -1,8 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-import { SkipNode, SkipList } from './src/skip-list';
-// import { Node, BST } from './src/bst';
+// import { SkipNode, SkipList } from './src/skip-list';
+import { Node, BST } from './src/bst';
 
 // {
 // function descOrder (a, b) {
@@ -42,47 +42,64 @@ import { SkipNode, SkipList } from './src/skip-list';
 //
 // let skipList = new SkipList();
 //
-//   let numberDesc = (a, b) => (b - a);
-//   let idAsc = (a, b) => (a.id - b.id);
+// let numberDesc = (a, b) => (b - a);
+// let idAsc = (a, b) => (a.id - b.id);
 //
-//   let list = new SkipList();
+// let list = new SkipList();
 //
-//   list.add(1).add(2).add(3).add(4).add(5).add(6).add(7).add(8);
-//   let y = list.find(new SkipNode(8));
 //
-//   console.log(list.printLevels());
+// let array = [];
+// for (let i = 0; i < 1000; i++) {
+//   let randomValue = Math.floor(Math.random() * 1000);
+//   array.push(randomValue);
+//   list.add(randomValue);
+// }
+// console.log(list.printLevels());
+// let start = new Date().getTime();
+// for (let i = 0; i < array.length; i++) {
+//   console.log('loop ' + i);
+//   list.remove(array[i]);
+// }
+// console.log(new Date().getTime() - start + " ms");
 //
-//   let peopleList = new SkipList({comparator: idAsc, height: 3});
-//   peopleList.remove({id: 321}).
-//              add({id: 4, name: 'Dennis'}).
-//              add({id: 22, name: 'John'}).
-//              add({id: 3, name: 'Charlie'}).
-//              add({id: 5, name: 'Endrju'}).
-//              add({id: 1, name: 'Andrzej'}).
-//              remove({id: 66});
-//
-//   console.log(peopleList.printLevels('name'));
-//
-//   console.log(list.toArray());
-//   console.log(peopleList.toArray('name'));
-//
-//   console.log(list.toString());
-//   console.log(peopleList.toString('name'));
+// console.log("remaining: "+ list.toString());
 
-let tree = new BST();
-tree.add(new Node(40));
-tree.add(new Node(30));
-// tree.add(new Node(50));
-tree.add(new Node(20));
-tree.add(new Node(39));
-tree.add(new Node(35));
+// const tree = new BST();
+// tree.add(new Node(30));
+// tree.add(new Node(40));
 // tree.add(new Node(45));
-// tree.add(new Node(55));
+//
+// tree.remove(new Node(30));
+//
+// console.log(tree.toArray());
 
-let x = tree.find(new Node(40));
-let a = tree._findSuccessor(x);
-// let b = tree._findSuccessor(tree.find(new Node(30)));
-// let c = tree._findSuccessor(tree.find(new Node(39)));
+// Init some constants
+const bst = new BST();
+const iterations = 100;
+const vector = Array.from({length: iterations},
+  () => Math.floor(Math.random() * iterations * 2));
+// Prepare expected array - should be without duplicates and sorted
+const expected = Array.from(new Set(vector))
+                       .sort((a, b) => a - b);
 
+// Add items to the tree
+for (let number of vector) {
+  bst.add(new Node(number));
+}
+
+// Get in-order result as an array
+const result = bst.toArray();
+
+// Result array's length doesn't match expected array's length
+if (expected.length !== result.length) {
+  throw new Error('Fuck!');
+}
+
+// Check if every element of the result matches expected
+for (let i = 0; i < expected.length; i++) {
+  if (expected[i] !== result[i]) {
+    throw new Error('Yikes!');
+  }
+}
 
 {}

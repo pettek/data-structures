@@ -2,9 +2,11 @@
   "name": "polbrot-data-structures",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./packageExports.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir dist",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -12,7 +14,7 @@
   },
   "author": "Piotr",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
