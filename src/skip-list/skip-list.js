@@ -55,6 +55,8 @@ export class SkipList {
         let previous = leftLink.next[i];
         leftLinks[i].next[i] = node;
         node.next[i] = previous;
+      } else {
+        this.head[i] = node;
       }
     }
 
@@ -69,11 +71,16 @@ export class SkipList {
   remove (nodeToRemove) {
     let node = (nodeToRemove instanceof SkipNode) ? nodeToRemove : new SkipNode(
       nodeToRemove);
-    node = this.find(node);
-    console.log('+');
+    let leftLinks = this.search(node);
+
+    node = (leftLinks[0] &&
+      leftLinks[0].next[0].value === node.value)
+      ? leftLinks[0].next[0]
+      : ((this.head[0] && this.head[0].value === node.value)
+        ? this.head[0]
+        : null);
+
     if (node) {
-      let leftLinks = this.search(node);
-      console.log('+');
       if (leftLinks.length === 0) {
 
         // No left links => this is the first element, modify only head
@@ -95,7 +102,6 @@ export class SkipList {
         }
       }
     }
-    console.log('+');
     return this;
   }
 
@@ -136,8 +142,8 @@ export class SkipList {
 
     for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
       let current = this.head[i];
-      while (current !== null && current !== node &&
-      this.comparator(current.value, node.value) <= 0) { // First parameter is less than second parameter
+      while (current !== null &&
+      this.comparator(current.value, node.value) < 0) { // First parameter is less than second parameter
         leftLinks[i] = current;
         current = current.next[i];
       }

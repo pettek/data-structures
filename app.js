@@ -1,8 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-// import { SkipNode, SkipList } from './src/skip-list';
-import { Node, BST } from './src/bst';
+import { SkipNode, SkipList } from './src/skip-list';
+// import { Node, BST } from './src/bst';
 
 // {
 // function descOrder (a, b) {
@@ -40,66 +40,55 @@ import { Node, BST } from './src/bst';
 //             .add({name: 'Osoba1', age: -100})
 //             .add({name: 'Osoba2', age: 100});
 //
-// let skipList = new SkipList();
+const skipList = new SkipList();
+
+const numberDesc = (a, b) => (b - a);
+const idAsc = (a, b) => (a.id - b.id);
+
+const list = new SkipList();
+
+const array = [];
+let rand;
+for(let i = 0; i < 10000; i++){
+  rand = Math.floor(Math.random() * 10);
+  array.push(rand);
+  list.add(rand);
+}
+
+for(let j = 0; j < array.length; j++){
+  if(j % 4 === 0) list.remove(array[j]);
+}
+
+console.log(list.toArray().length);
+
+
+// // Init some constants
+// const bst = new BST();
+// const iterations = 100;
+// const vector = Array.from({length: iterations},
+//   () => Math.floor(Math.random() * iterations * 2));
+// // Prepare expected array - should be without duplicates and sorted
+// const expected = Array.from(new Set(vector))
+//                        .sort((a, b) => a - b);
 //
-// let numberDesc = (a, b) => (b - a);
-// let idAsc = (a, b) => (a.id - b.id);
-//
-// let list = new SkipList();
-//
-//
-// let array = [];
-// for (let i = 0; i < 1000; i++) {
-//   let randomValue = Math.floor(Math.random() * 1000);
-//   array.push(randomValue);
-//   list.add(randomValue);
+// // Add items to the tree
+// for (let number of vector) {
+//   bst.add(new Node(number));
 // }
-// console.log(list.printLevels());
-// let start = new Date().getTime();
-// for (let i = 0; i < array.length; i++) {
-//   console.log('loop ' + i);
-//   list.remove(array[i]);
+//
+// // Get in-order result as an array
+// const result = bst.toArray();
+//
+// // Result array's length doesn't match expected array's length
+// if (expected.length !== result.length) {
+//   throw new Error('Fuck!');
 // }
-// console.log(new Date().getTime() - start + " ms");
 //
-// console.log("remaining: "+ list.toString());
-
-// const tree = new BST();
-// tree.add(new Node(30));
-// tree.add(new Node(40));
-// tree.add(new Node(45));
-//
-// tree.remove(new Node(30));
-//
-// console.log(tree.toArray());
-
-// Init some constants
-const bst = new BST();
-const iterations = 100;
-const vector = Array.from({length: iterations},
-  () => Math.floor(Math.random() * iterations * 2));
-// Prepare expected array - should be without duplicates and sorted
-const expected = Array.from(new Set(vector))
-                       .sort((a, b) => a - b);
-
-// Add items to the tree
-for (let number of vector) {
-  bst.add(new Node(number));
-}
-
-// Get in-order result as an array
-const result = bst.toArray();
-
-// Result array's length doesn't match expected array's length
-if (expected.length !== result.length) {
-  throw new Error('Fuck!');
-}
-
-// Check if every element of the result matches expected
-for (let i = 0; i < expected.length; i++) {
-  if (expected[i] !== result[i]) {
-    throw new Error('Yikes!');
-  }
-}
+// // Check if every element of the result matches expected
+// for (let i = 0; i < expected.length; i++) {
+//   if (expected[i] !== result[i]) {
+//     throw new Error('Yikes!');
+//   }
+// }
 
 {}
