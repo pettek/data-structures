@@ -128,7 +128,9 @@ export class BST {
       }
       return current;
     } else {
+      if(current.parent === null) return null;
       while (current !== current.parent.left) {
+        if(current.parent === null) return null;
         current = current.parent;
       }
       return current.parent;

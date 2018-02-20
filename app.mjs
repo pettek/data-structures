@@ -1,8 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-import { SkipNode, SkipList } from './src/skip-list';
-// import { Node, BST } from './src/bst';
+// import { SkipNode, SkipList } from './src/skip-list';
+import { Node, BST } from './src/bst/index';
 
 // {
 // function descOrder (a, b) {
@@ -70,14 +70,12 @@ import { SkipNode, SkipList } from './src/skip-list';
 //   console.log(peopleList.toString('name'));
 
 let tree = new BST();
-tree.add(new Node(40));
 tree.add(new Node(30));
-// tree.add(new Node(50));
-tree.add(new Node(20));
-tree.add(new Node(39));
-tree.add(new Node(35));
-// tree.add(new Node(45));
-// tree.add(new Node(55));
+tree.add(new Node(30));
+tree.add(new Node(30));
+tree.add(new Node(30));
+tree.add(new Node(30));
+
 
 let x = tree.find(new Node(40));
 let a = tree._findSuccessor(x);
