@@ -19,6 +19,8 @@ export class BST {
    * @param node
    */
   add (node) {
+
+    node = (node instanceof Node) ? node : new Node(node);
     // If the tree is empty, provided node becomes a root element
     if (this.root === null) {
       this.root = node;
@@ -89,9 +91,13 @@ export class BST {
   }
 
   /**
-   * Balances the tree
+   * Balances the tree using balancer object
+   *
+   * @param {*} balancer
    */
-  balance () {}
+  balance (balancer) {
+    this.root = balancer.run(this.root);
+  }
 
   /**
    * Removes a node from the tree
