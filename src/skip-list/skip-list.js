@@ -81,9 +81,9 @@ export class SkipList {
      * All in all, it really just replaces the find method...
      */
     node = (leftLinks[0] &&
-      leftLinks[0].next[0].value === node.value)
+      this.comparator(leftLinks[0].next[0].value, node.value) === 0)
       ? leftLinks[0].next[0]
-      : ((this.head[0] && this.head[0].value === node.value)
+      : ((this.head[0] && this.comparator(this.head[0].value, node.value) === 0)
         ? this.head[0]
         : null);
 
@@ -125,7 +125,7 @@ export class SkipList {
 
     let leftLinks = this.search(node);
     if (leftLinks[0] && leftLinks[0].next[0] &&
-      leftLinks[0].next[0].value === node.value) {
+      this.comparator(leftLinks[0].next[0].value, node.value) === 0) {
       return node;
     } else {
       if(this.head[0] && this.head[0].value === node.value) {
