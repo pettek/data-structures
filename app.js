@@ -1,8 +1,8 @@
 'use strict';
 
 // import { Node, List } from './src/list';
-import { SkipNode, SkipList } from './src/skip-list';
-// import { Node, BST } from './src/bst';
+// import { SkipNode, SkipList } from './src/skip-list';
+import { Node, BST, DSWBalancer } from './src/bst';
 
 // {
 // function descOrder (a, b) {
@@ -40,41 +40,85 @@ import { SkipNode, SkipList } from './src/skip-list';
 //             .add({name: 'Osoba1', age: -100})
 //             .add({name: 'Osoba2', age: 100});
 //
-const skipList = new SkipList();
 
-const numberDesc = (a, b) => (b - a);
-const idAsc = (a, b) => (a.id - b.id);
+// const skipList = new SkipList();
+//
+// const numberDesc = (a, b) => (b - a);
+// const idAsc = (a, b) => (a.id - b.id);
+//
+// const list = new SkipList();
+//
+// const array = [];
+// const expected = [];
+// let rand;
+// const howMany = 15000;
+//
+// for (let m = 0; m < howMany; m++) {
+//   rand = Math.floor(Math.random() * 10000000000000000000000);
+//   array.push(rand);
+// }
+//
+// const t0 = new Date().getTime();
+// for (let i = 0; i < howMany; i++) {
+//   list.add(array[i]);
+// }
+// const t1 = new Date().getTime();
+//
+//
+// const afterAddLength = list.toArray().length;
+//
+// let arrSorted = array.sort((a, b) => a - b);
+//
+// for (let n = 0; n < list.length; n++) {
+//   if (list.toArray()[n] !== arrSorted[n]) {
+//     console.log('Error on add');
+//   }
+// }
+//
+// for (let j = 0; j < array.length; j++) {
+//   // let lengthBefore = list.toArray().length;
+//   list.remove(array[j]);
+//   // if (list.toArray().length === lengthBefore) {
+//   //   console.log('Element ' + array[j] + ' was not removed...');
+//   // }
+// }
+//
+// const t2 = new Date().getTime();
+//
+// let expSorted = expected.sort((a, b) => a - b);
+// let listSorted = list.toArray();
+//
+// for (let k = 0; k < expSorted.length; k++) {
+//   if (expSorted[k] !== listSorted[k]) {
+//     console.log('Error on remove');
+//   }
+// }
+//
+//
+// console.log('Adding ' + (t1 - t0) + ' milliseconds.');
+// console.log('Outputed length after add: ' + afterAddLength);
+// console.log('Deleting ' + (t2 - t1) + ' milliseconds.');
+// console.log('Expected length: ' + expSorted.length);
+// console.log('Outputed length: ' + listSorted.length);
 
-const list = new SkipList();
+// const skipList = new SkipList({comparator: (a, b) => (a - b)});
+//
+// skipList.add(1);
+// skipList.add(1);
+// skipList.add(1);
+// skipList.add(1);
+// skipList.add(1);
+// skipList.remove(1);
+// skipList.remove(1);
+// skipList.remove(1);
+// console.log(skipList.toArray());
 
-const array = [];
-let rand;
-for(let i = 0; i < 100; i++){
-  rand = Math.floor(Math.random() * 10000);
-  array.push(rand);
-  list.add(rand);
-}
-
-const expected = [];
-for(let j = 0; j < array.length; j++){
-  if(j % 2 === 0) {
-    list.remove(array[j]);
-  } else {
-    expected.push(array[j]);
-  }
-}
-
-let expSorted = expected.sort((a, b) => a - b);
-let listSorted = list.toArray();
-
-for(let k = 0; k < expSorted.length; k++) {
-  console.log(expSorted[k] + "  " + listSorted[k]);
-}
-
+//
+// {}
 
 // // Init some constants
 // const bst = new BST();
-// const iterations = 100;
+// const iterations = 1000;
 // const vector = Array.from({length: iterations},
 //   () => Math.floor(Math.random() * iterations * 2));
 // // Prepare expected array - should be without duplicates and sorted
@@ -100,5 +144,11 @@ for(let k = 0; k < expSorted.length; k++) {
 //     throw new Error('Yikes!');
 //   }
 // }
-
+//
+const tree = new BST();
+for(let i = 1; i <= 127; i++) {
+  tree.add(i);
+}
+console.log(tree.toString());
+tree.balance(new DSWBalancer());
 {}
