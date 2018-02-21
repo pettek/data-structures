@@ -8,10 +8,9 @@ export class SkipNode {
    * @param height (optional) - providing height helps with debugging, but it's
    * overridden when randomizing it
    */
-  constructor (value, height = 0) {
+  constructor (value) {
     this.value = value;
     this._next = [];
-    this._height = height;
   }
 
   get next () {
