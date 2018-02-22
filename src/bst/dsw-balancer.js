@@ -35,13 +35,13 @@ export class DSWBalancer {
       current = current.parent;
       elements++;
     }
+    ++elements;
 
     /*
      * Calculating how many nodes will be at the lowest level of the tree
      */
     let levels = Math.floor(Math.log2(elements + 1));
     let bottomNodes = elements + 1 - (2 ** (levels));
-    console.log(bottomNodes);
 
     /*
      * Rotate at every odd node starting from the root as many times as there
@@ -49,7 +49,7 @@ export class DSWBalancer {
      */
     for (let i = 0; i < bottomNodes; i++) {
       current = DSWBalancer._rotateLeft(current);
-      current = current.right;
+      current = (current.right) ? current.right : current;
     }
 
     // Go to the root back again
