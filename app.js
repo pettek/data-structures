@@ -41,7 +41,7 @@ import { Node, BST, DSWBalancer } from './src/bst';
 //             .add({name: 'Osoba2', age: 100});
 //
 
-// const skipList = new SkipList();
+// const bst = new SkipList();
 //
 // const numberDesc = (a, b) => (b - a);
 // const idAsc = (a, b) => (a.id - b.id);
@@ -101,17 +101,17 @@ import { Node, BST, DSWBalancer } from './src/bst';
 // console.log('Expected length: ' + expSorted.length);
 // console.log('Outputed length: ' + listSorted.length);
 
-// const skipList = new SkipList({comparator: (a, b) => (a - b)});
+// const bst = new SkipList({comparator: (a, b) => (a - b)});
 //
-// skipList.add(1);
-// skipList.add(1);
-// skipList.add(1);
-// skipList.add(1);
-// skipList.add(1);
-// skipList.remove(1);
-// skipList.remove(1);
-// skipList.remove(1);
-// console.log(skipList.toArray());
+// bst.add(1);
+// bst.add(1);
+// bst.add(1);
+// bst.add(1);
+// bst.add(1);
+// bst.remove(1);
+// bst.remove(1);
+// bst.remove(1);
+// console.log(bst.toArray());
 
 //
 // {}
@@ -145,10 +145,47 @@ import { Node, BST, DSWBalancer } from './src/bst';
 //   }
 // }
 //
-const tree = new BST();
-for(let i = 1; i <= 127; i++) {
-  tree.add(i);
+// const tree = new BST();
+// for(let i = 1; i <= 127; i++) {
+//   tree.add(i);
+// }
+// console.log(tree.toString());
+// tree.balance(new DSWBalancer());
+// {}
+
+const bst = new BST();
+const iterations = 10;
+const vector = [20,10,60,5,15,3,4,9,16,30,80,70,85]/*Array.from({length: iterations},
+ () => Math.floor(Math.random() * iterations * 5));
+ // Prepare expected array - should be without duplicates and sorted*/
+const expected = Array.from(vector).sort((a, b) => a - b);
+console.log(expected);
+// Add items to the tree
+for (let number of vector) {
+  bst.add(number);
 }
-console.log(tree.toString());
-tree.balance(new DSWBalancer());
-{}
+
+// Get in-order result as an array
+const result = bst.toArray();
+console.log(result);
+// Result array's length doesn't match expected array's length
+if (expected.length !== result.length) {
+  throw new Error('Fuck!');
+}
+
+// Check if every element of the result matches expected
+for (let i = 0; i < expected.length; i++) {
+  if (expected[i] !== result[i]) {
+    throw new Error('Yikes!');
+  }
+}
+
+
+// for (let i = 0; i < expected.length; i+=2) {
+//   bst.remove(expected[i]);
+// }
+bst.remove(30);
+bst.remove(10);
+bst.remove(5);
+bst.remove(20);
+console.log(bst.toArray());

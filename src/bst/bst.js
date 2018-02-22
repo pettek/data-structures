@@ -14,7 +14,6 @@ export class BST {
     this.root = null;
   }
 
-
   /**
    * Adds a new node to the tree
    * @param node
@@ -183,8 +182,37 @@ export class BST {
 
         // Check if the element to remove is root
         if (nodeToRemove.isRoot) {
-          this.root = nodeToRemove.left;
-          this.root.parent = null;
+          let rightMin = BST._findMin(nodeToRemove.right);//Find min in right subtree
+          this.root.value = rightMin.value; // assign new min right value to root
+          //Now we need to delete right min from right subtree
+          //Check if the node have child and define which one
+          if (rightMin.right === null && rightMin.left === null) {
+            let parent = rightMin.parent;
+            if(parent === null){
+              this.root = null;
+            }else if (parent.left!==null &&  this.compare(parent.left.value,rightMin.value) === 0) {
+              parent.left = null;
+            } else {
+              parent.right = null;
+            }
+          } else {
+            let parent = rightMin.parent;
+            const child = rightMin.left || rightMin.right;
+            if (parent === null) {
+              this.root = child;
+
+            }
+            //if left child is not null child will be equal to left child if is null - to right child of node
+            else if (parent.left !== null &&
+              this.compare(parent.left.value, rightMin.value) === 0) {
+              parent.left = child;
+              child.parent = parent;
+            } else {
+              parent.right = child;
+              child.parent = parent;
+            }
+          }
+
         } else {
 
           // Find successor and its parent
