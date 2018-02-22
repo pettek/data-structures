@@ -17,7 +17,7 @@ export class DSWBalancer {
      */
     while (current.left !== null || current.right !== null) {
       if (current.left) {
-        current = this._rotateRight(current);
+        current = DSWBalancer._rotateRight(current);
       } else {
         current = current.right;
       }
@@ -48,7 +48,7 @@ export class DSWBalancer {
      * nodes at the bottom level
      */
     for (let i = 0; i < bottomNodes; i++) {
-      current = this._rotateLeft(current);
+      current = DSWBalancer._rotateLeft(current);
       current = current.right;
     }
 
@@ -59,15 +59,22 @@ export class DSWBalancer {
 
     let m = 2 ** (levels) - 1;
 
-    // Loop j times through the tree and perform m left-rotations in the process
+    /*
+     * Loop j times through the tree and perform m left-rotations in the process
+     * on every second element starting from root every time
+     */
     for (let j = 0; j < levels - 1; j++) {
       m = Math.floor(m / 2);
+
+      // Go back to the root
       while (current.parent) {
         current = current.parent;
       }
 
       for (let k = 0; k < m; k++) {
-        current = this._rotateLeft(current);
+        current = DSWBalancer._rotateLeft(current);
+
+        // Skip the even node, so we rotate only around the odd ones
         current = current.right;
       }
     }
@@ -88,7 +95,7 @@ export class DSWBalancer {
    * @returns {Node}
    * @private
    */
-  _rotateLeft (node) {
+  static _rotateLeft (node) {
     let currentValue = node.value;
 
     /*
@@ -134,7 +141,7 @@ export class DSWBalancer {
    * @returns {Node}
    * @private
    */
-  _rotateRight (node) {
+  static _rotateRight (node) {
     let currentValue = node.value;
 
     /*
