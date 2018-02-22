@@ -152,7 +152,8 @@ export class BST {
           this.root.parent = null;
         } else {
 
-          /* Check whether node to be removed is a left-child or a right-child
+          /*
+           * Check whether node to be removed is a left-child or a right-child
            * of its parents and then make connection between node's parent and
            * its left child
            */
@@ -167,8 +168,8 @@ export class BST {
           nodeToRemove.right.left = nodeToRemove.left;
 
           /*
-           * If node to be removed has a left child, make a replacement its new
-           * parent
+           * If node to be removed has a left child, make a connection to its
+           * new parent
            */
           if (nodeToRemove.left) {
             nodeToRemove.left.parent = nodeToRemove.right;
@@ -186,7 +187,7 @@ export class BST {
         } else {
 
           // Find successor and its parent
-          let current = this._findSuccessor(node);
+          let current = BST._findSuccessor(node);
           let parent = current.parent;
 
           /*
@@ -218,7 +219,7 @@ export class BST {
    * @returns {*}
    * @private
    */
-  _findSuccessor (node) {
+  static _findSuccessor (node) {
     let current = node;
 
     /*
@@ -267,7 +268,7 @@ export class BST {
    * @returns {*}
    * @private
    */
-  _findPredecessor (node) {
+  static _findPredecessor (node) {
     let current = node;
 
     // If the node has a left child, the successor must be in the left sub-tree
@@ -314,7 +315,7 @@ export class BST {
    * @returns {Node | null}
    * @private
    */
-  _findMin (current) {
+  static _findMin (current) {
 
     // Tree is empty -> return null
     if (current === null) {
@@ -336,7 +337,7 @@ export class BST {
    * @returns {Node | null}
    * @private
    */
-  _findMax (current) {
+  static _findMax (current) {
 
     // Tree is empty -> return null
     if (current === null) {
@@ -358,13 +359,13 @@ export class BST {
    */
   toArray (sort = SORT_METHOD_ASC) {
     const findMethod = (sort === SORT_METHOD_ASC)
-      ? this._findSuccessor
-      : this._findPredecessor;
+      ? BST._findSuccessor
+      : BST._findPredecessor;
 
     // Start from the minimal value
     let current = (sort === SORT_METHOD_ASC)
-      ? this._findMin(this.root)
-      : this._findMax(this.root);
+      ? BST._findMin(this.root)
+      : BST._findMax(this.root);
 
     let array = [];
 
@@ -382,13 +383,13 @@ export class BST {
    * @returns {string}
    */
   toString () {
-    let current = this._findMin(this.root); // Start from the minimal value
+    let current = BST._findMin(this.root); // Start from the minimal value
     let string = '';
 
     // Loop for as long as there is a successor
     while (current !== null) {
       string += (current.value + ' ');
-      current = this._findSuccessor(current);
+      current = BST._findSuccessor(current);
     }
     return string;
   }
