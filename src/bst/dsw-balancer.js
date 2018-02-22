@@ -82,15 +82,23 @@ export class DSWBalancer {
   }
 
   /**
-   * Performs left rotation
-   *
+   * Performs a left-rotation around the node given as a parameter and returns
+   * a new "root". It may not be indeed the root of the tree, but it is a node
+   * that replaces the node given as a parameter
    * @param {Node} node
+   * @returns {Node}
    * @private
    */
   _rotateLeft (node) {
     let currentValue = node.value;
-    let currentParent = node.parent;
+
+    /*
+     * Store the right's child right child in the variable, because it's getting
+     * overridden in the process
+     */
     let nodeRightRight = (node.right) ? node.right.right : null;
+
+    // If-statements ensure that we never try to access any property of the null
     if (node.right) {
       node.value = node.right.value;
       node.right.value = currentValue;
@@ -104,7 +112,6 @@ export class DSWBalancer {
       if (node.right.left) {
         node.right.left.parent = node.right;
       }
-
     }
 
     node.left = node.right;
@@ -112,21 +119,32 @@ export class DSWBalancer {
     if (node.right) {
       node.right.parent = node;
     }
-    node.parent = currentParent;
 
+    /*
+     * Return a new "root" of the rotation. If we now perform an opposite
+     * rotation around this new root, we will revert the effect of this rotation
+     */
     return node;
   }
 
   /**
-   * Performs right rotation
-   *
+   * Performs a right-rotation around the node given as a parameter and returns
+   * a new "root". It may not be indeed the root of the tree, but it is a node
+   * that replaces the node given as a parameter
    * @param {Node} node
+   * @returns {Node}
    * @private
    */
   _rotateRight (node) {
     let currentValue = node.value;
-    let currentParent = node.parent;
+
+    /*
+     * Store the left's child left child in the variable, because it's getting
+     * overridden in the process
+     */
     let nodeLeftLeft = (node.left) ? node.left.left : null;
+
+    // If-statements ensure that we never try to access any property of the null
     if (node.left) {
       node.value = node.left.value;
       node.left.value = currentValue;
@@ -140,7 +158,6 @@ export class DSWBalancer {
       if (node.left.right) {
         node.left.right.parent = node.left;
       }
-
     }
 
     node.right = node.left;
@@ -148,8 +165,11 @@ export class DSWBalancer {
     if (node.left) {
       node.left.parent = node;
     }
-    node.parent = currentParent;
 
+    /*
+     * Return a new "root" of the rotation. If we now perform an opposite
+     * rotation around this new root, we will revert the effect of this rotation
+     */
     return node;
   }
 }
