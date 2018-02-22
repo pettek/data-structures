@@ -11,4 +11,8 @@ export class Node {
   get isRoot () {
     return this.parent === null;
   }
+
+  get isLeftChild() {
+    return (this.parent) && (this.parent.left === this);
+  }
 }

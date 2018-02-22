@@ -19,8 +19,8 @@ export class BST {
    * @param node
    */
   add (node) {
-
     node = (node instanceof Node) ? node : new Node(node);
+
     // If the tree is empty, provided node becomes a root element
     if (this.root === null) {
       this.root = node;
@@ -69,6 +69,7 @@ export class BST {
    * @returns {*}
    */
   find (node) {
+    node = (node instanceof Node) ? node : new Node(node);
     let current = this.root; // Start from the root
 
     // Loop as long as we didn't hit the end of the tree
@@ -126,7 +127,7 @@ export class BST {
            * of its parents and then make connection between node's parent and
            * its left child
            */
-          if (nodeToRemove === nodeToRemove.parent.left) {
+          if (nodeToRemove.isLeftChild) {
             nodeToRemove.parent.left = nodeToRemove.left;
           } else {
             nodeToRemove.parent.right = nodeToRemove.left;
@@ -155,7 +156,7 @@ export class BST {
            * of its parents and then make connection between node's parent and
            * its left child
            */
-          if (nodeToRemove === nodeToRemove.parent.left) {
+          if (nodeToRemove.isLeftChild) {
             nodeToRemove.parent.left = nodeToRemove.right;
           } else {
             nodeToRemove.parent.right = nodeToRemove.right;
@@ -188,7 +189,8 @@ export class BST {
           let current = this._findSuccessor(node);
           let parent = current.parent;
 
-          /* Check whether node to be removed is a left-child or a right-child
+          /*
+           * Check whether node to be removed is a left-child or a right-child
            * of its parents and then make connection between node's parent and
            * its left child
            */
@@ -219,9 +221,13 @@ export class BST {
   _findSuccessor (node) {
     let current = node;
 
-    // If the node has a right child, the successor must be in the right sub-tree
+    /*
+     * If the node has a right child, the successor must be in the right
+     * sub-tree
+     */
     if (current.right !== null) {
       current = current.right;
+
       // Go left until you hit the end of the tree
       while (current.left !== null) {
         current = current.left;
@@ -233,7 +239,6 @@ export class BST {
        * or it may be one of its parents
        */
     } else {
-
       /*
        * Current is a root node with no right children OR we hit the root while
        * searching -> no successor
