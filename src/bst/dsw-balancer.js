@@ -39,8 +39,8 @@ export class DSWBalancer {
     /*
      * Calculating how many nodes will be at the lowest level of the tree
      */
-    let bottomNodes = elements + 1 -
-      (2 ** (Math.floor(Math.log2(elements + 1))));
+    let levels = Math.floor(Math.log2(elements + 1));
+    let bottomNodes = elements + 1 - (2 ** (levels));
     console.log(bottomNodes);
 
     /*
@@ -57,11 +57,10 @@ export class DSWBalancer {
       current = current.parent;
     }
 
-
-    let m = 2 ** (Math.floor(Math.log2(elements + 1))) - 1;
+    let m = 2 ** (levels) - 1;
 
     // Loop j times through the tree and perform m left-rotations in the process
-    for (let j = 0; j < Math.floor(Math.log2(elements + 1)) - 1; j++) {
+    for (let j = 0; j < levels - 1; j++) {
       m = Math.floor(m / 2);
       while (current.parent) {
         current = current.parent;
