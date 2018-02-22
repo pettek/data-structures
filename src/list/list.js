@@ -12,7 +12,7 @@ export class List {
   constructor (comparator) {
     this.root = null;
     this.comparator = comparator || function (a, b) {
-      return (a > b);
+      return (a - b);
     };
   }
 
@@ -39,7 +39,7 @@ export class List {
       return this;
     }
     // Check if root element must be replaced
-    if (this.comparator(this.root.value, node.value)) {
+    if (this.comparator(this.root.value, node.value) > 0) {
       node.next = this.root;
       this.root = node;
       return this;
@@ -49,7 +49,7 @@ export class List {
 
     // Traverse through the list and find the appropriate place for new element
     while (current.next !== null) {
-      if (this.comparator(current.next.value, node.value)) {
+      if (this.comparator(current.next.value, node.value) > 0) {
         break;
       }
       current = current.next;
