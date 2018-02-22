@@ -1,7 +1,7 @@
 {
   "name": "polbrot-data-structures",
   "version": "1.0.0",
-  "description": "",
+  "description": "* List\r * SkipList",
   "main": "./packageExports.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +14,9 @@
   },
   "author": "Piotr",
   "license": "ISC",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0"
