@@ -14,6 +14,7 @@ export class BST {
     this.root = null;
   }
 
+
   /**
    * Adds a new node to the tree
    * @param node
