@@ -154,11 +154,11 @@ import { Node, BST, DSWBalancer } from './src/bst';
 // {}
 
 const bst = new BST();
-const iterations = 10;
-const vector = [20,10,60,5,15,3,4,9,16,30,80,70,85]/*Array.from({length: iterations},
+const iterations = 50000;
+const vector =Array.from({length: iterations},
  () => Math.floor(Math.random() * iterations * 5));
  // Prepare expected array - should be without duplicates and sorted*/
-const expected = Array.from(vector).sort((a, b) => a - b);
+const expected = Array.from(new Set(vector)).sort((a, b) => a - b);
 console.log(expected);
 // Add items to the tree
 for (let number of vector) {
@@ -166,7 +166,7 @@ for (let number of vector) {
 }
 
 // Get in-order result as an array
-const result = bst.toArray();
+let result = bst.toArray();
 console.log(result);
 // Result array's length doesn't match expected array's length
 if (expected.length !== result.length) {
@@ -181,11 +181,18 @@ for (let i = 0; i < expected.length; i++) {
 }
 
 
-// for (let i = 0; i < expected.length; i+=2) {
-//   bst.remove(expected[i]);
-// }
-bst.remove(30);
-bst.remove(10);
-bst.remove(5);
-bst.remove(20);
-console.log(bst.toArray());
+for (let i = 0; i < expected.length; i+=2) {
+  bst.remove(expected[i]);
+}
+result = bst.toArray();
+console.log(vector);
+console.log(result);
+// Check if every element of the result matches expected
+let y = 0;
+for (let a = 1; a < expected.length; a+=2) {
+
+  if (expected[a] !== result[y]) {
+    throw new Error('Yikes!');
+  }
+  y++;
+}

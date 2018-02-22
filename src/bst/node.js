@@ -15,4 +15,10 @@ export class Node {
   get isLeftChild() {
     return (this.parent) && (this.parent.left === this);
   }
+  get haveTwoChildren(){
+    return this.left && this.right;
+  }
+  get haveNoChildren(){
+    return this.left===null && this.right===null;
+  }
 }
