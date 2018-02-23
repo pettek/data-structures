@@ -70,22 +70,22 @@ export class SkipList {
    */
 
   remove (value) {
-    let path = this.search(value);
+    let leftLinks = this.search(value);
     let node;
-    if (path[0] && path[0].nextNodes && path[0].nextNodes[0].value === value) {
-      node = path[0].nextNodes[0];
+    if (leftLinks[0] && leftLinks[0].next && leftLinks[0].next[0].value === value) {
+      node = leftLinks[0].next[0];
     } else {
-      if (this.head.nextNodes && this.head.nextNodes[0].value === value) {
-        node = this.head.nextNodes[0];
+      if (this.head && this.head[0].value === value) {
+        node = this.head[0];
       }
     }
 
     if (node) {
-      for (let i = 0; i < node.nextNodes.length; i++) {
-        if(path[i]){
-          path[i].nextNodes[i] = node.nextNodes[i];
+      for (let i = 0; i < node.next.length; i++) {
+        if(leftLinks[i]){
+          leftLinks[i].next[i] = node.next[i];
         } else {
-          this.head.nextNodes[i] = node.nextNodes[i];
+          this.head[i] = node.next[i];
         }
       }
     }
