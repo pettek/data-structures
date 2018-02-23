@@ -33,7 +33,7 @@ export class SkipList {
     node.height = this.generateHeight(this.maxHeight);
     node.next = Array(node.height).fill(null);
 
-    let leftLinks = this.search(node);
+    let leftLinks = this.search(node.value);
     if (leftLinks.every(function (v) { return v === null; })) {
 
       // No left links => this is the first element, modify only head
@@ -130,12 +130,13 @@ export class SkipList {
     let path = Array(this.maxHeight).fill(null);
 
     while (level >= 0) {
-      while (current.next[level] !== null &&
-      this.comparator(current.next[level].value, value) < 0) {
-        current = current.next[level];
+      let currentValue = (Array.isArray(current)) ? current[level] : current.next[level];
+      while (currentValue !== null &&
+      this.comparator(currentValue.value, value) < 0) {
         for (let i = level; i >= 0; i--) {
-          path[i] = current;
+          path[i] = currentValue;
         }
+        currentValue = currentValue.next[level];
       }
       level--;
     }
