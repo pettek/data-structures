@@ -124,30 +124,23 @@ export class SkipList {
    * @param node
    * @returns {Array}
    */
-  search (node) {
-    node = (node instanceof SkipNode) ? node : new SkipNode(node);
-    let leftLinks = Array(this.maxHeight).fill(null);
+  search (value) {
+    let level = this.maxHeight - 1;
+    let current = this.head;
+    let path = Array(this.maxHeight).fill(null);
 
-    for (let i = (this.maxHeight - 1); i >= 0; i--) { // Go through levels from head's height to 0
-
-      /*
-       * current variable indicates where to start searching:
-       * -> from the head if this is the first iteration or the previous one
-       * returned null (head is the first ancestor)
-       * -> from the previous iteration result which is the element from i-th
-       * level that is smaller than node's value
-       */
-      let current = (i === (this.maxHeight - 1))
-        ? this.head[i]
-        : (leftLinks[i + 1]) ? leftLinks[i + 1] : this.head[i];
-      while (current !== null &&
-      this.comparator(current.value, node.value) < 0) { // First parameter is less than second parameter
-        leftLinks[i] = current;
-        current = current.next[i];
+    while (level >= 0) {
+      while (current.next[level] !== null &&
+      this.comparator(current.next[level].value, value) < 0) {
+        current = current.next[level];
+        for (let i = level; i >= 0; i--) {
+          path[i] = current;
+        }
       }
+      level--;
     }
 
-    return leftLinks;
+    return path;
   }
 
   /**
