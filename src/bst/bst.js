@@ -139,7 +139,7 @@ export class BST {
         } else {
           let parent = rightMin.parent;
           const child = rightMin.left || rightMin.right;
-          if (parent.isRoot) {
+          if (parent === null) {
             this.root = child;
 
           }
