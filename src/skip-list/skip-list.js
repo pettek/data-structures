@@ -72,7 +72,8 @@ export class SkipList {
   remove (value) {
     let leftLinks = this.search(value);
     let node;
-    if (leftLinks[0] && leftLinks[0].next && leftLinks[0].next[0].value === value) {
+    if (leftLinks[0] && leftLinks[0].next &&
+      leftLinks[0].next[0].value === value) {
       node = leftLinks[0].next[0];
     } else {
       if (this.head && this.head[0].value === value) {
@@ -82,7 +83,7 @@ export class SkipList {
 
     if (node) {
       for (let i = 0; i < node.next.length; i++) {
-        if(leftLinks[i]){
+        if (leftLinks[i]) {
           leftLinks[i].next[i] = node.next[i];
         } else {
           this.head[i] = node.next[i];
@@ -107,7 +108,7 @@ export class SkipList {
       this.comparator(leftLinks[0].next[0].value, node.value) === 0) {
       return node.value;
     } else {
-      if(this.head[0] && this.head[0].value === node.value) {
+      if (this.head[0] && this.head[0].value === node.value) {
         return node.value;
       } else {
         return null;
@@ -130,13 +131,18 @@ export class SkipList {
     let path = Array(this.maxHeight).fill(null);
 
     while (level >= 0) {
-      let currentValue = (Array.isArray(current)) ? current[level] : current.next[level];
+      let currentValue = (current === null)
+        ? null
+        : (Array.isArray(current))
+          ? current[level]
+          : current.next[level];
       while (currentValue !== null &&
       this.comparator(currentValue.value, value) < 0) {
         for (let i = level; i >= 0; i--) {
           path[i] = currentValue;
         }
         currentValue = currentValue.next[level];
+        current = currentValue;
       }
       level--;
     }
