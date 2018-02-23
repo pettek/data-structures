@@ -111,132 +111,67 @@ export class BST {
 
     // Check if node is in the tree
     if (nodeToRemove) {
-
-      // CASE 1: Node to be removed has NO right child
-      if (nodeToRemove.right === null) {
-
-        // Check if the element to remove is root
-        if (nodeToRemove.isRoot) {
-          this.root = nodeToRemove.left;
-          if (this.root) {
-            this.root.parent = null;
-          }
-        } else { // The element is not a root element
-
-          /* Check whether node to be removed is a left-child or a right-child
-           * of its parents and then make connection between node's parent and
-           * its left child
-           */
-          if (nodeToRemove.isLeftChild) {
-            nodeToRemove.parent.left = nodeToRemove.left;
-          } else {
-            nodeToRemove.parent.right = nodeToRemove.left;
-          }
-          if (nodeToRemove.left) {
-            nodeToRemove.left.parent = nodeToRemove.parent;
-          }
-        }
-      }
-
-      // CASE 2: Node to remove has a right child that doesn't have a left child
-      else if (nodeToRemove.right.left === null) {
-
-        // Check if the element to remove is root
-        if (nodeToRemove.isRoot) {
-          let leftChild = this.root.left;
-          this.root = nodeToRemove.right;
-          this.root.left = leftChild;
-          if (leftChild) {
-            leftChild.parent = this.root;
-          }
-          this.root.parent = null;
+      if (nodeToRemove.haveNoChildren) {
+        let parent = nodeToRemove.parent;
+        if(parent === null){
+          this.root = null;
+        }else if (parent.left &&  this.compare(parent.left.value,nodeToRemove.value) === 0) {
+          parent.left = null;
         } else {
+          parent.right = null;
+        }
+      }
+      else if (nodeToRemove.haveTwoChildren) {
+        let rightMin = BST._findMin(nodeToRemove.right);//Find min in right subtree
+        nodeToRemove.value = rightMin.value;
 
-          /*
-           * Check whether node to be removed is a left-child or a right-child
-           * of its parents and then make connection between node's parent and
-           * its left child
-           */
-          if (nodeToRemove.isLeftChild) {
-            nodeToRemove.parent.left = nodeToRemove.right;
+        //Now we need to delete right min from right subtree
+        //Check if the node have child and define which one
+        if (rightMin.right === null && rightMin.left === null) {
+          let parent = rightMin.parent;
+          if(parent === null){
+            this.root = null;
+          }else if (parent.left!==null &&  this.compare(parent.left.value,rightMin.value) === 0) {
+            parent.left = null;
           } else {
-            nodeToRemove.parent.right = nodeToRemove.right;
+            parent.right = null;
           }
+        } else {
+          let parent = rightMin.parent;
+          const child = rightMin.left || rightMin.right;
+          if (parent.isRoot) {
+            this.root = child;
 
-          // Make appropriate connections
-          nodeToRemove.right.parent = nodeToRemove.parent;
-          nodeToRemove.right.left = nodeToRemove.left;
-
-          /*
-           * If node to be removed has a left child, make a connection to its
-           * new parent
-           */
-          if (nodeToRemove.left) {
-            nodeToRemove.left.parent = nodeToRemove.right;
+          }
+          //if left child is not null child will be equal to left child if is null - to right child of node
+          else if (parent.left !== null &&
+            this.compare(parent.left.value, rightMin.value) === 0) {
+            parent.left = child;
+            child.parent = parent;
+          } else {
+            parent.right = child;
+            child.parent = parent;
           }
         }
       }
-
-      // CASE 3: Every other case...
       else {
+        let parent = nodeToRemove.parent;
+        const child = nodeToRemove.left || nodeToRemove.right;
+        if(parent === null){
+          this.root = child;
+          this.root.parent = null;
 
-        // Check if the element to remove is root
-        if (nodeToRemove.isRoot) {
-          let rightMin = BST._findMin(nodeToRemove.right);//Find min in right subtree
-          this.root.value = rightMin.value; // assign new min right value to root
-          //Now we need to delete right min from right subtree
-          //Check if the node have child and define which one
-          if (rightMin.right === null && rightMin.left === null) {
-            let parent = rightMin.parent;
-            if(parent === null){
-              this.root = null;
-            }else if (parent.left!==null &&  this.compare(parent.left.value,rightMin.value) === 0) {
-              parent.left = null;
-            } else {
-              parent.right = null;
-            }
-          } else {
-            let parent = rightMin.parent;
-            const child = rightMin.left || rightMin.right;
-            if (parent === null) {
-              this.root = child;
-
-            }
-            //if left child is not null child will be equal to left child if is null - to right child of node
-            else if (parent.left !== null &&
-              this.compare(parent.left.value, rightMin.value) === 0) {
-              parent.left = child;
-              child.parent = parent;
-            } else {
-              parent.right = child;
-              child.parent = parent;
-            }
-          }
-
+        }
+        //if left child is not null child will be equal to left child if is null - to right child of node
+        else if (parent.left !== null && this.compare(parent.left.value,nodeToRemove.value) === 0) {
+          parent.left = child;
+          child.parent = parent;
         } else {
-
-          // Find successor and its parent
-          let current = BST._findSuccessor(node);
-          let parent = current.parent;
-
-          /*
-           * Check whether node to be removed is a left-child or a right-child
-           * of its parents and then make connection between node's parent and
-           * its left child
-           */
-          if (nodeToRemove === nodeToRemove.parent.left) {
-            nodeToRemove.parent.left = current;
-          } else {
-            nodeToRemove.parent.right = current;
-          }
-
-          // Make appropriate connections
-          current.parent = nodeToRemove.parent;
-          parent.left = current.right;
-          current.left = nodeToRemove.left;
-          current.right = nodeToRemove.right;
+          parent.right = child;
+          child.parent = parent;
         }
       }
+
     }
     return this;
   }
